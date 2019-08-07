@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+        }
+    </style>
+</head>
+<body>
+<!--canvas的默认大小是300*150像素-->
+<!--设置canvas的宽高的时候，不要通过CSS来设置width和height，因为CSS只能设置Canvas的元素本身大小，不能设置元素绘图表面（drawing surface）的大小-->
+<canvas id="canvas" width="600" height="300">
+    Canvas不被支持
+</canvas>
+<p>设置canvas的宽高的时候，不要通过CSS来设置width和height，因为CSS只能设置Canvas的元素本身大小，不能设置元素绘图表面（drawing surface）的大小
+    <a href="Unit1-3.html">点击查看对比</a>
+</p>
+</body>
+<script src="Unit1-1.js"></script>
+</html>
