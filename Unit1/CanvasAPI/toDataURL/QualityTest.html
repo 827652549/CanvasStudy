@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Testing canvas toDataURL (second) quality param</title>
+    <style>
+        canvas { border: 1px solid green; }
+        img { border: 1px solid blue }
+        span { display: block; text-align: center }
+        p { display: inline-block; margin-right: 10px }
+    </style>
+</head>
+<body>
+<h2>Canvas</h2>
+<canvas id="c" width="100"></canvas>
+<script>
+    var canvasEl = document.getElementById('c'),
+        ctx = canvasEl.getContext('2d');
+
+    function test(label) {
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1;
+        ctx.arc(50,50,30.5,0,Math.PI*2,true);
+        ctx.stroke();
+
+        ctx.lineWidth = 2;
+        ctx.strokeRect(40.5,40.5,20,20);
+
+        document.write('<h2>' + label + '</h2>');
+        for (var i = 0; i < 1; i += 0.1) {
+            document.write('<p>');
+            document.write('<span>Quality: <b>' + i.toFixed(1) + '</b></span>');
+            document.write('<img src="' + canvasEl.toDataURL('image/jpeg', i) + '">');
+            document.write('</p>');
+        }
+    }
+
+    // no background
+    test('toDataURL("image/jpeg", &hellip;), no background');
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
+
+    // white background
+    test('toDataURL("image/jpeg", &hellip;), white background');
+</script>
+</body>
+</html>

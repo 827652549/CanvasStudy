@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>精灵表坐标查看器Sprite Sheets</title>
+    <style>
+        body{
+            background: #dddddd;
+        }
+        #canvas {
+            position: absolute;
+            left: 0px;
+            top: 50px;
+            margin: 20px;
+            background: #ffffff;
+            border: thin inset rgba(100,150,230,0.5);
+            cursor: pointer;
+        }
+        #readout {
+            margin-top: 10px;
+            margin-left: 15px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!--用来显示当前精灵表坐标-->
+    <div id="readout"></div>
+    <p>加载一个图片，移动鼠标，获取基于canvas鼠标处精灵表坐标</p>
+    <canvas id="canvas" width="500" height="250">Canvas not supported</canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        readout = document.getElementById('readout'),
+        spritesheet = new Image();
+
+    //Function……
+    /**
+     * 窗口坐标转化为基于Canvas的坐标
+     * @param canvas
+     * @param x
+     * @param y
+     * @returns {{x: number, y: number}}
+     */
+    function windowToCanvas(canvas,x,y) {
+        //获取canvas元素的边界框(bouding box)
+        var bbox = canvas.getBoundingClientRect();
+        return {
+            x:x-bbox.left*(canvas.width/bbox.width),
+            y:y-bbox.top*(canvas.height/bbox.height)
+        }
+    }
+
+    /**
+     * 绘制背景条纹线
+     */
+    function drawBackground(){
+        var VERTICAL_LINE_SOACING = 12,
+            i = context.canvas.height;
+
+        context.clearRect(0,0,canvas.width,canvas.height);
+        context.strokeStyle = 'lightgray';
+        context.lineWidth = 0.5;
+
+        //预留出顶部4个网格线高的长度供图片占位,从地部划线，从下往上
+        while (i>VERTICAL_LINE_SOACING*4){
+            context.beginPath();
+            context.moveTo(0,i);
+            context.lineTo(canvas.width,i);
+            context.stroke();
+
+            i -= VERTICAL_LINE_SOACING;
+
+        }
+    }
+
+    /**
+     * 绘制精灵表
+     */
+    function drawSpritesheet(){
+        //将图片画到画布上
+        context.drawImage(spritesheet,0,0);
+    }
+
+    /**
+     * 绘制光标跟随网格线
+     * @param x
+     * @param y
+     */
+    function drawGuidelines(x, y) {
+        context.strokeStyle='rgba(0,0,230,0.8)';
+        context.lineWidth = 0.5;
+        drawVerticalLine(x);
+        drawHorizontalLine(y);
+
+    }
+
+    function updateReadout(x,y){
+        //四舍五入到0位小数并输出到#readout元素中
+        readout.innerHTML='('+x.toFixed(0)+','+y.toFixed(0)+')';
+    }
+
+    /**
+     * 绘制水平跟随线
+     * @param y
+     */
+    function drawHorizontalLine(y) {
+        context.beginPath();
+        context.moveTo(0, y + 0.5);
+        context.lineTo(context.canvas.width, y + 0.5);
+        context.stroke();
+    }
+
+    /**
+     * 绘制垂直跟随线
+     * @param x
+     */
+    function drawVerticalLine(x){
+        context.beginPath();
+        context.moveTo(x+0.5,0);
+        context.lineTo(x+0.5,context.canvas.height);
+        context.stroke();
+    }
+
+    //Event handlers……
+    canvas.onmousemove = function (e) {
+        var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+
+        drawBackground();
+        drawSpritesheet();
+        drawGuidelines(loc.x, loc.y);
+        updateReadout(loc.x, loc.y);
+    };
+
+    //Initialization
+
+    //设置图片路径
+    spritesheet.src='../../images/running-sprite-sheet.png';
+    //加载图片之后画精灵表
+    spritesheet.onload = function (ev) {
+        drawSpritesheet();
+    };
+    //画背景
+    drawBackground();
+
+</script>
+</html>

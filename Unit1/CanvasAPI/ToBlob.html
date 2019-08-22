@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas对象的toBlob方法示例</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+</body>
+<script>
+    //获取canvas元素
+    var canvas = document.getElementById("canvas");
+
+    //第一个参数是回调函数
+    canvas.toBlob(
+        //传入blob对象
+        function (blob) {
+            //创建一个img标签
+            var newImg = document.createElement("img"),
+                //以blob对象为基础创建一个url
+                url = URL.createObjectURL(blob);
+
+                console.log(url);
+                //blob:http://localhost:63342/d869ed9c-cad0-49f9-9965-e9959a15e0c0
+                console.log(blob);
+                //返回一个BLOB对象
+
+            //加载后销毁
+            newImg.onload = function () {
+                // no longer need to read the blob so it's revoked
+                URL.revokeObjectURL(url);
+            };
+
+            //img标签属性赋值
+            newImg.src = url;
+            //添加为子元素
+            document.body.appendChild(newImg);
+        });
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>save方法和restore方法的使用</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    //……
+
+    //save和restore绘图表面
+    /**
+     * 保存状态
+     */
+    function saveDrawingSurface() {
+        //复制画布全部区域到对象中
+        drawingSurfaceImageData = context.getImageData(0, 0, canvas.x, canvas.y);
+    }
+
+    function restoreDrawingSurface() {
+        //粘贴复制的内容覆盖context
+        context.putImageData(drawingSurfaceImageData,0,0);
+    }
+
+    //Event handles……
+
+    /**
+     * 当鼠标进入画布时保存旧状态
+     * @param ev
+     */
+    canvas.onmousedown = function (ev) {
+        //……
+        saveDrawingSurface();
+        //……
+    };
+
+    /**
+     * 当鼠标在画布中移动时，可以绘制网格线
+     * @param ev
+     */
+    canvas.onmousemove = function (ev) {
+        var loc = windowToCanvas(e);
+
+        //如果在拖拽状态
+        if (dragging){
+            restoreDrawingSurface();
+            //……
+
+            //如果要添加鼠标辅助线
+            if (guidewires){
+                drawGuidewires(mousedown.x,mousedown.y);
+            }
+
+        }
+    }
+
+    /**
+     * 当鼠标移出画布时，回到旧状态
+     * @param ev
+     */
+    canvas.onmouseup = function (ev) {
+        //……
+        restoreDrawingSurface();
+    }
+
+
+
+
+
+    // function drawGrid(strokeStyle,fillStyle) {
+    //     context.save();//保存这个绘图环境状态到栈中
+    //
+    //     context.fillStyle=fillStyle;
+    //     context.strokeStyle=strokeStyle;
+    //
+    //     //画网格...(代码省略)
+    //
+    //     context.restore();//从之前的状态从栈中释放
+    // }
+</script>
+</html>

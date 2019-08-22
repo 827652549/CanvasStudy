@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas时钟+转化img标签+不用按钮操作'</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        #snapshotImageElement {
+            position: absolute;
+            left: 10px;
+            margin: 20px;
+            border: thin solid #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+    <p>直接右键可以导出img变化的canvas</p>
+
+
+    <img id='snapshotImageElement'/>
+
+    <canvas id='canvas' width='400' height='400'>
+        Canvas not supported
+    </canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        //字体高度
+        FONT_HEIGHT = 15,
+        //外边距
+        MARGIN = 35,
+        //时钟半径（留出外边距放数字）
+        RADIUS = canvas.width / 2 - MARGIN,
+        //分针和秒针的截断长度
+        HAND_TRUNCATION = canvas.width / 25,
+        //时针截断长度
+        HOUR_HAND_TRUNCATION = canvas.width / 10,
+        //数字空隙
+        NUMERAL_SPACING = 20,
+        //指针的全长度
+        HAND_RADUIS = RADIUS + NUMERAL_SPACING,
+
+        snapshotImageElement = document.getElementById('snapshotImageElement'),
+        loop;
+
+
+    //方法……
+
+    /**
+     * 绘制一个钟面的圆形
+     */
+    function drawCircle() {
+        //开始定义路径
+        context.beginPath();
+        //创建一个圆形路径
+        context.arc(canvas.width / 2, canvas.height / 2, RADIUS, 0, Math.PI * 2, true);
+        context.stroke();
+    }
+
+    /**
+     * 绘制时钟周围的数字
+     */
+    function drawNumerals() {
+        var numerals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            angle = 0,
+            numeralWidth = 0;
+
+        numerals.forEach(function (numeral) {
+            //设置每个数字的角度。注意：数字3是0度
+            angle = Math.PI / 6 * (numeral - 3);
+            //在向画布输出之前，以像素度量各数字的宽度
+            numeralWidth = context.measureText(numeral).width;
+            //利用三角函数，填充每个数字到对应位置
+            context.fillText(numeral, canvas.width / 2 + Math.cos(angle) * (HAND_RADUIS) - numeralWidth / 2, canvas.height / 2 + Math.sin(angle) * (HAND_RADUIS) + FONT_HEIGHT / 3);
+        })
+    }
+
+    /**
+     * 绘制时钟中心的实心圆
+     */
+    function drawCenter() {
+        context.beginPath();
+        context.arc(canvas.width / 2, canvas.height / 2, 5, 0, Math.PI * 2, true);
+        context.fill();
+    }
+
+    /**
+     * 绘制某个钟表的指针的通用方法
+     * @param loc
+     * @param isHour
+     */
+    function drawHand(loc, isHour) {
+        //设置指针角度
+        var angle = (Math.PI * 2) * (loc / 60) - Math.PI / 2,
+            //判断哪个指针
+            handRadius = isHour ? RADIUS - HAND_TRUNCATION - HOUR_HAND_TRUNCATION : RADIUS - HAND_TRUNCATION;
+
+        context.moveTo(canvas.width / 2, canvas.height / 2);
+        context.lineTo(canvas.width / 2 + Math.cos(angle) * handRadius, canvas.height / 2 + Math.sin(angle) * handRadius);
+        context.stroke();
+    }
+
+    /**
+     * 以当前时间绘制钟表的三个表针，实现drawHand方法
+     */
+    function drawHands() {
+        var date = new Date,
+            hour = date.getHours();
+        //24小时制转化为12小时制
+        hour = hour > 12 ? hour - 12 : hour;
+
+        //为了满足drawHand()中loc/60以平均角度的操作，需要将时针*5。因为12*5=60，可以当成分针/秒针进行调用函数
+        drawHand(hour * 5 + (date.getMinutes() / 60) * 5, true);
+        drawHand(date.getMinutes(), false);
+        drawHand(date.getSeconds(), false);
+    }
+
+    /**
+     * 画出当前时刻钟表的各个组件
+     */
+    function drawClock() {
+        //清空全部canvas的像素内容
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.save();
+        context.fillStyle = 'rgba(255,255,255,0.8)';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawCircle();
+        drawCenter();
+        drawHands();
+
+        context.restore();
+
+        drawNumerals();
+
+
+        updateClockImage();
+    }
+
+    function updateClockImage() {
+        dataUrl = canvas.toDataURL();
+        snapshotImageElement.src = dataUrl;
+    }
+
+
+
+
+
+
+    //Initialization------初始化
+    context.font = FONT_HEIGHT + 'px Arial';
+    loop = setInterval(drawClock, 1000);
+
+</script>
+</html>
