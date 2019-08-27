@@ -24,8 +24,24 @@
     Canvas不被支持
 </canvas>
 <p>设置canvas的宽高的时候，不要通过CSS来设置width和height，因为CSS只能设置Canvas的元素本身大小，不能设置元素绘图表面（drawing surface）的大小
-    <a href="Unit1-3.html">点击查看对比</a>
+    <a href="CanvasSizeNotCSS.html">点击查看对比</a>
 </p>
 </body>
-<script src="Unit1-1.js"></script>
+<script>
+    /**
+     * 在页面中画一个canvas，然后在居中位置写上蓝色'Hello Canvas'，并加上文字描边
+     * @type {HTMLElement}
+     */
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+    //设置字体格式
+    context.font = '38pt Arial';
+    //fillStyle设置或返回填充canvas的颜色、渐变、模式，其中CornflowerBlue 矢车菊蓝
+    context.fillStyle = 'cornflowerblue';
+    //strokeStyle用于设置或返回笔触的颜色、渐变、模式
+    context.strokeStyle = 'blue';
+    //设置文字的内容和位置
+    context.fillText('Hello Canvas', canvas.width / 2 - 150, canvas.height / 2 + 15);
+    context.strokeText("Hello Canvas", canvas.width / 2 - 150, canvas.height / 2 + 15);
+</script>
 </html>

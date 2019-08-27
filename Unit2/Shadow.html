@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>阴影</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas =document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineWidth=3;
+
+    context.shadowColor="rgba(0,0,0,0.75)";
+    context.shadowOffsetX=5;
+    context.shadowOffsetY=5;
+    context.shadowBlur=5;
+    context.strokeRect(20,20,50,50);
+    context.fillRect(100,20,50,50);
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图案</title>
+    <style>
+        #canvas {
+            background: #eeeeee;
+            border: thin solid cornflowerblue;
+        }
+
+        #radios {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<p>点击不同的按钮查看不同的重复演示</p>
+    <div id="radios">
+        <input type="radio" id="repeatRadio" name="patternRadio" checked>repeat
+        <input type="radio" id="repeatXRadio" name="patternRadio">repeatX
+        <input type="radio" id="repeatYRadio" name="patternRadio">repeatY
+        <input type="radio" id="noRepeatRadio" name="patternRadio">noRepeat
+    </div>
+<canvas id="canvas" height="500" width="500"></canvas>
+</body>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            repeatRadio = document.getElementById('repeatRadio'),
+            repeatXRadio = document.getElementById('repeatXRadio'),
+            repeatYRadio = document.getElementById('repeatYRadio'),
+            noRepeatRadio = document.getElementById('noRepeatRadio'),
+            image = new Image();
+        
+        //Function……
+        
+        function fillCanvasWithPattern(repeatString) {
+            var pattern = context.createPattern(image,repeatString);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle=pattern;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fill();
+        }
+
+        //Event……
+
+        repeatRadio.onclick=function (ev) {
+            fillCanvasWithPattern('repeat');
+        };
+        repeatXRadio.onclick=function (ev) {
+            fillCanvasWithPattern('repeat-x');
+        };
+        repeatYRadio.onclick=function (ev) {
+            fillCanvasWithPattern('repeat-y');
+        };
+        noRepeatRadio.onclick=function (ev) {
+            fillCanvasWithPattern('no-repeat');
+        };
+
+        //Initialization
+
+        image.src='../images/smalltree.png';
+        image.onload=function (ev) {
+            fillCanvasWithPattern('repeat');
+        }
+
+
+
+    </script>
+</html>

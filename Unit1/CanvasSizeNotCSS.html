@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用CSS设置canvas大小会带来canvas.width的不正确</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<!--canvas的默认大小是300*150像素-->
+<!--设置canvas的宽高的时候，不要通过CSS来设置width和height，因为CSS只能设置Canvas的元素本身大小，不能设置元素绘图表面（drawing surface）的大小-->
+<canvas id="canvas">
+    Canvas不被支持
+</canvas>
+
+</body>
+<script>
+    /**
+     * 在页面中画一个canvas，然后在居中位置写上蓝色'Hello Canvas'，并加上文字描边
+     * @type {HTMLElement}
+     */
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+    //设置字体格式
+    context.font = '38pt Arial';
+    //fillStyle设置或返回填充canvas的颜色、渐变、模式，其中CornflowerBlue 矢车菊蓝
+    context.fillStyle = 'cornflowerblue';
+    //strokeStyle用于设置或返回笔触的颜色、渐变、模式
+    context.strokeStyle = 'blue';
+    //设置文字的内容和位置
+    context.fillText('Hello Canvas', canvas.width / 2 - 150, canvas.height / 2 + 15);
+    context.strokeText("Hello Canvas", canvas.width / 2 - 150, canvas.height / 2 + 15);
+</script>
+</html>

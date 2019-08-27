@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>矩形的绘制</title>
+</head>
+<body>
+<canvas id="canvas" width="700" height="500"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineJoin = 'round';
+    context.lineWidth = 30;
+
+    context.font = '24px Helvetica';
+    context.fillText('点击任何处以擦除', 175, 40);
+
+    context.strokeRect(75, 100, 200, 200);
+    context.fillRect(325, 100, 200, 200);
+
+    context.canvas.onmousedown = function (ev) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+</script>
+</html>

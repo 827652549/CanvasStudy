@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 单位向量的分量计算
+     */
+    var vectorMagnitude = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2)),
+        //新单位向量
+        unitVector = new Vector();
+    //新单位向量上的x值
+    unitVector.x = vector.x / vectorMagnitude;
+    //新单位向量上的y值
+    unitVector.y = vector.y / vectorMagnitude;
+
+    /**
+     * 两个向量相加
+     */
+    var vectorSum = new Vector();
+
+    vectorSum.x = vectorA.x + vectorB.x;
+    vectorSum.y = vectorA.y + vectorB.y;
+
+    /**
+     * 两个向量相减
+     */
+    var vectorSubtraction = new Vector();
+
+    vectorSubtraction.x = vectorA.x - vectorB.x;
+    vectorSubtraction.y = vectorA.y - vectorB.y;
+
+    /**
+     * 两个向量的点积
+     */
+    var dotProduct = vectorA.x * vectorB.x + vectorA.y * vectorB.y;
+
+
+</script>
+</html>

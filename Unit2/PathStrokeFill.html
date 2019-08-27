@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>路径、描边和填充</title>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+
+<script>
+    var context = document.getElementById('canvas').getContext('2d');
+
+    //Function……
+
+    /**
+     * 画背景网格
+     */
+    function drawGrid(context, color, stepX, stepY) {
+        //网格线代码省略，可照搬前面章节代码
+    }
+
+    //Initialization……
+
+    drawGrid(context, 'lightgray', 10, 10);
+
+    //设置属性
+
+    context.font = '48pt Helvetica';
+    context.strokeStyle = 'blue';
+    context.fillStyle = 'red';
+    context.lineWidth = '2';
+
+    //Text
+
+    context.strokeText('Stroke', 60, 110);
+    context.fillText('Fill', 440, 110);
+
+    context.strokeText('Stroke&Fill', 650, 110);
+    context.fillText('Stroke&Fill', 650, 110);
+
+    //矩形……
+
+    context.lineWidth = '5';
+    context.beginPath();
+    context.rect(80, 150, 150, 100);
+    context.stroke();
+
+    context.beginPath();
+    context.rect(400, 150, 150, 100);
+    context.fill();
+
+    context.beginPath();
+    context.rect(750, 150, 150, 100);
+    context.stroke();
+    context.fill();
+
+    //开放路径
+
+    context.beginPath();
+    context.arc(150,370,60,0,Math.PI*3/2);
+    context.stroke();
+
+    context.beginPath();
+    context.arc(475,370,60,0,Math.PI*3/2);
+    context.fill();
+
+    context.beginPath();
+    context.arc(820,370,60,0,Math.PI*3/2);
+    context.fill();
+    context.stroke();
+
+    //闭合路径
+
+    context.beginPath();
+    context.arc(150,550,60,0,Math.PI*3/2);
+    //路径从当前点回到起始点
+    context.closePath();
+    context.stroke();
+
+    context.beginPath();
+    context.arc(475,550,60,0,Math.PI*3/2);
+    context.closePath();
+    context.fill();
+
+    context.beginPath();
+    context.arc(820,550,60,0,Math.PI*3/2);
+    context.closePath();
+    context.fill();
+    context.stroke();
+</script>
+</html>
