@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制其他剪纸图形</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context= canvas.getContext('2d');
+    
+    //Function……
+
+    /**
+     * 画网格
+     */
+    function drawGird(color,stepX,stepY) {
+        context.strokeStyle = color;
+        context.lineWidth = 0.5;
+
+        for (var i = stepX + 0.5; i < context.canvas.width; i += stepX) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (var i = stepY + 0.5; i < context.canvas.height; i += stepY) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+    }
+    
+    function draw() {
+        context.clearRect(0,0,canvas.width,canvas.height);
+        drawGird('lightgray',10,10);
+        
+        context.save();
+        
+        context.shadowColor='rgba(200,200,0,0.5)';
+        context.shadowOffsetX=12;
+        context.shadowOffsetY=12;
+        context.shadowBlur=15;
+        
+        drawCutouts();
+        strokeCutoutShapes();
+        context.restore();
+    }
+
+    /**
+     * 画那些需要镂空的图形
+     */
+    function drawCutouts() {
+        context.beginPath();
+        addOuterRectanglePath();//CW，CW代表Clockwise顺时针
+
+        addCirclePath();//CCW,CCW代表counter-clockwise逆时针
+        addRectanglePath();//CCW
+        addTrianglePath();//CCW
+
+        context.fill();//Cut out shapes
+    }
+
+    /**
+     * 镂空描边
+     */
+    function strokeCutoutShapes() {
+        context.save();
+
+        context.strokeStyle='rgba(0,0,0,0.7)';
+        context.beginPath();
+        addOuterRectanglePath();//CW
+        context.stroke();
+
+        context.beginPath();
+        addCirclePath();
+        addRectanglePath();
+        addTrianglePath();
+        context.stroke();
+    }
+
+    /**
+     * 重写rect方法，增加了顺序和逆序路径的参数
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     * @param direction 顺序和逆序,布尔类型
+     */
+    function rect(x,y,w,h,direction) {
+        if(direction){//CCW
+            context.moveTo(x,y);
+            context.lineTo(x,y+h);
+            context.lineTo(x+w,y+h);
+            context.lineTo(x+w,y);
+            context.closePath();
+        }else{
+            context.moveTo(x,y);
+            context.lineTo(x + w, y);
+            context.lineTo(x + w, y + h);
+            context.lineTo(x, y + h);
+            context.closePath();
+        }
+    }
+
+    function addOuterRectanglePath() {
+        context.rect(110, 25, 370, 335);
+    }
+
+    function addCirclePath() {
+        context.arc(300,300,40,0,Math.PI*2,true);
+    }
+
+    function addRectanglePath() {
+        rect(310,55,70,35,true);
+    }
+
+    function addTrianglePath() {
+        context.moveTo(400,200);
+        context.lineTo(250, 115);
+        context.lineTo(200, 200);
+        context.closePath();
+    }
+
+    //Init……
+    context.fillStyle='goldenrod';
+    draw();
+</script>
+</html>

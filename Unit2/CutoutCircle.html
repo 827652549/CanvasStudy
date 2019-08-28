@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>剪纸效果、镂空效果</title>
+
+</head>
+<body>
+<canvas id="canvas" height="400" width="600"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+
+    //Function……
+
+    /**
+     *  画网格线
+     * @param context
+     * @param color
+     * @param stepX
+     * @param stepY
+     */
+    function drawGird(context, color, stepX, stepY) {
+        context.strokeStyle = color;
+        context.lineWidth = 0.5;
+
+        for (var i = stepX + 0.5; i < context.canvas.width; i += stepX) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (var i = stepY + 0.5; i < context.canvas.height; i += stepY) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+    }
+
+    function drawTwoArcs() {
+        context.beginPath();
+        context.arc(300, 190, 150, 0, Math.PI * 2, false);
+        context.arc(300, 190, 100, 0, Math.PI * 2, true);
+
+        context.fill();
+        context.shadowColor = undefined;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.stroke();
+
+    }
+
+    function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawGird(context,'lightgray', 10, 10);
+        context.save();
+
+        context.shadowColor = 'rgba(0,0,0,0.8)';
+        context.shadowOffsetX = 12;
+        context.shadowOffsetY = 12;
+        context.shadowBlur = 15;
+        drawTwoArcs();
+        context.restore();
+
+    }
+
+    //Init……
+    context.fillStyle = 'rgba(100,140,230,0.5)';
+    context.strokeStyle = context.fillStyle;
+    draw();
+</script>
+</html>
