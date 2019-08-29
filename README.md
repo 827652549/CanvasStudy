@@ -1,6 +1,5 @@
 # CanvasStudy
 
-{{TOC}}
 
 ## 关于Canvas（About Canvas）
 >Canvas API 提供了一个通过JavaScript和HTML的&lt;canvas&gt;元素来绘制图形的方式。它可以用于动画、游戏画面、数据可视化、图片编辑以及实时视频处理等方面。
@@ -35,7 +34,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 ## 创作背景（Creative Background）
 &emsp;&emsp;在浏览了国内主要的Canvas系列讲解后，发现对于Canvas的教程是不健全的，除此之外，那些更适合作为一个查阅工具，而不是适合系统学习。为了让更多的人学习和使用Canvas，我决定出一篇Canvas教程当作自己的处女座，写作的过程中会有不成熟的地方，希望能得到大家的指正和批评。
 
-&emsp;&emsp;我以*&laquo;HTML5 Canvas核心技术(图形、动画与游戏开发) &raquo;机械工业出版社* 为Canvas系列教程的核心参考资料，另外再某些书中没有说明白的，再引用其他平台如MDN来补充和总结。
+&emsp;&emsp;我以《HTML5 Canvas核心技术(图形、动画与游戏开发)》机械工业出版社 为Canvas系列教程的核心参考资料，另外再某些书中没有说明白的，再引用其他平台如MDN来补充和总结。
 
 &emsp;&emsp;在这里感谢David Geary创作这本书，感谢爱飞翔翻译。
 
@@ -59,8 +58,8 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 &emsp;&emsp;在教程之中，我省略了一部分方法的参数介绍，因为你能很容易在网上找到更权威的参数说明，便不再过多解释。
 
 &emsp;&emsp;**更新顺序会按照章节顺序更新，更新仍在继续，请保持关注和支持**。
-<span id="contents"></span>
-## 教程目录（Contents）
+
+## <span id="contents"></span> 教程目录（Contents） 
 ### 第一章·基础知识
 1. [设置Canvas元素width和height的两种不同方式](https://blog.csdn.net/HuoYiHengYuan/article/details/98768351)
 2. [toDataUrl()的使用](https://blog.csdn.net/HuoYiHengYuan/article/details/99671708)
