@@ -83,7 +83,8 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 4. [渐变色和图案](https://blog.csdn.net/HuoYiHengYuan/article/details/100083546)
 5. [阴影](https://blog.csdn.net/HuoYiHengYuan/article/details/100093188)
 6. [Canvas中路径(path)、描边(stroke)与填充(fill)详细介绍](https://blog.csdn.net/HuoYiHengYuan/article/details/100097238)
-7. 未完待续
+7. [剪纸效果/镂空效果](https://blog.csdn.net/HuoYiHengYuan/article/details/100127744)
+8. [线段、网格、像素边界](https://blog.csdn.net/HuoYiHengYuan/article/details/100133611)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
