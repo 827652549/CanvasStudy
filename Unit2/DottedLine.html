@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>虚线的绘制</title>
+    <!--现在，所有浏览器都实现了虚线都方法，这里便不再手动编写虚线都函数-->
+</head>
+<body>
+<canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    //实线
+    context.beginPath();
+    context.setLineDash([]);
+    context.moveTo(10, 10);
+    context.lineTo(100, 10);
+    context.stroke();
+
+    //虚线(线长：2，间距：2)
+    context.beginPath();
+    context.setLineDash([5, 4,3]);
+    context.moveTo(10, 20);
+    context.lineTo(100, 20);
+    context.stroke();
+
+
+</script>
+</html>
