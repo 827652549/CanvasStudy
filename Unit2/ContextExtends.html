@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CanvasRenderingContext2D拓展</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+    //添加新属性
+    CanvasRenderingContext2D.prototype.newProperty = '新属性';
+    //添加新方法
+    CanvasRenderingContext2D.prototype.newFunction = function () {
+        console.log('新方法');
+    };
+
+    //测试新属性
+    console.log(context.newProperty);
+    //测试新方法
+    context.newFunction();
+
+</script>
+</html>
