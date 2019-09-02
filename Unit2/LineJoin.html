@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>线段连接点</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas =document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineWidth=15;
+
+
+    //圆角连接点
+    context.lineJoin='round';
+    context.strokeStyle='#aaaaaa';
+    context.beginPath();
+    context.moveTo(10,10);
+    context.lineTo(100,10);
+    context.lineTo(100,50);
+    context.stroke();
+
+    //用一条直线连接两角外部的点。
+    context.lineJoin='bevel';
+    context.strokeStyle='#777777';
+    context.beginPath();
+    context.moveTo(30,30);
+    context.lineTo(120,30);
+    context.lineTo(120,70);
+    context.stroke();
+
+    //延长两个路径的外边至相交，突出一个角
+    context.lineJoin='miter';
+    context.strokeStyle='#444444';
+    context.beginPath();
+    context.moveTo(50,50);
+    context.lineTo(140,50);
+    context.lineTo(140,90);
+    context.stroke();
+
+</script>
+</html>
