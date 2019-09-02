@@ -107,7 +107,9 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 - Email：827652549@qq.com
 - QQ：827652549
 - QQ群：865327862，在这里我们共同探讨关于Canvas的有趣技术、感谢支持。
-![QQ群：827652549二维码](https://827652549.github.io/CanvasStudy/images/QQGroup.jpg =200x200)
+<div align="center"><img src="https://827652549.github.io/CanvasStudy/images/QQGroup.jpg" width="200" art="qq群二维码865327862"></div>
+
+
 
 ## 欢迎修订（Join me）
 &emsp;&emsp;如果您对代码中的细节有更合适的修改，欢迎和我一起完善这套教程。
