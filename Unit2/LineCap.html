@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>线段端点</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineWidth=10;
+    context.lineCap='butt';//默认，原样绘制
+
+    context.beginPath();
+    context.moveTo(10,10);
+    context.lineTo(100,10);
+    context.stroke();
+
+    context.lineCap='round';
+    context.beginPath();
+    context.moveTo(10,30);
+    context.lineTo(100,30);
+    context.stroke();
+
+    context.lineCap='square';
+    context.beginPath();
+    context.moveTo(10,50);
+    context.lineTo(100,50);
+    context.stroke();
+
+</script>
+</html>
