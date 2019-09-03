@@ -88,11 +88,12 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 7. [剪纸效果/镂空效果](https://blog.csdn.net/HuoYiHengYuan/article/details/100127744)
 8. [线段、网格、像素边界](https://blog.csdn.net/HuoYiHengYuan/article/details/100133611)
 9. [坐标轴的绘制(带刻度线)](https://blog.csdn.net/HuoYiHengYuan/article/details/100152080)
-10. [画板上直线和矩形选区的实现](https://blog.csdn.net/HuoYiHengYuan/article/details/100179518)
+10. [画板——直线和矩形选区的实现](https://blog.csdn.net/HuoYiHengYuan/article/details/100179518)
 11. [虚线和蚂蚁线](https://blog.csdn.net/HuoYiHengYuan/article/details/100188987)
 12. [CanvasRenderingContext2D扩展新方法和新属性](https://blog.csdn.net/HuoYiHengYuan/article/details/100190323)
 13. [线段端点和连接点](https://blog.csdn.net/HuoYiHengYuan/article/details/100377904)
 14. [圆和圆弧](https://blog.csdn.net/HuoYiHengYuan/article/details/100516741)
+15. [画板——圆的实现](https://blog.csdn.net/HuoYiHengYuan/article/details/100529003)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
