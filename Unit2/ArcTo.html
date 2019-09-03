@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arcTo()作圆弧</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineWidth=5;
+
+    //实现一个圆角矩形的一个角
+
+    //黑虚线画上边
+    context.setLineDash([5,5]);
+    context.beginPath();
+    context.moveTo(10,10);
+    context.lineTo(100,10);
+    context.stroke();
+
+    //红实线画弧角
+    context.strokeStyle='red';
+    context.beginPath();
+    context.moveTo(100,10);
+    context.setLineDash([]);
+    context.arcTo(150,10,150,60,50);
+    context.stroke();
+
+    //黑虚线画右边
+    context.strokeStyle='black';
+    context.beginPath();
+    context.setLineDash([5,5]);
+    context.moveTo(150,60);
+    context.lineTo(150,150);
+    context.stroke();
+
+</script>
+</html>
