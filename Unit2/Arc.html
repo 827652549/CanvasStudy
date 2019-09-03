@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc()作圆弧</title>
+</head>
+<body>
+
+<canvas id="canvas" width="500" height="500"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+    context.beginPath();
+    context.arc(100, 100, 50, Math.PI / 4, Math.PI, false);
+    context.stroke();
+
+</script>
+</html>
