@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽画圆</title>
+</head>
+<style>
+    body {
+        background: #eeeeee;
+    }
+
+    #controls {
+        position: absolute;
+        left: 25px;
+        top: 25px;
+    }
+
+    #canvas {
+        background: #ffffff;
+        cursor: pointer;
+        margin-left: 10px;
+        margin-top: 10px;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    input[type='button'] {
+        background: cornflowerblue;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+</style>
+<body>
+
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<div id="controls">
+
+    Color:<select id="strokeStyleSelect" style="margin-right: 20px">
+    <option value="red">red</option>
+    <option value="green">green</option>
+    <option value="blue">blue</option>
+    <option value="orange">orange</option>
+
+</select>
+    Guidewires(坐标辅助线):
+    <input type="checkbox" id="guidewireCheckbox" checked style="margin-right: 20px">
+    填充实心
+    <input type="checkbox" id="RectangleCheckbox" style="margin-right: 20px">
+    <input type="button" id="eraseAllButton" value="清空画布">
+</div>
+<p>画圆：设置笔触颜色，是否添加辅助线，是否填充内部空间，然后再画布上绘画。如有需要，使用"清除画布"按钮</p>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        eraseAllButton = document.getElementById('eraseAllButton'),
+        guidewireCheckbox = document.getElementById('guidewireCheckbox'),
+        strokeStyleSelect = document.getElementById('strokeStyleSelect'),
+        RectangleCheckbox = document.getElementById('RectangleCheckbox'),
+        drawingSurfaceImageData,
+        mousedown = {},
+        rubberbandRect = {},
+        dragging = false,
+        guidewires = guidewireCheckbox.checked,
+        rectangle = RectangleCheckbox.checked;
+
+    //Function……
+
+    /**
+     * 画网格
+     * @param color
+     * @param stepX
+     * @param stepY
+     */
+    function drawGrid(color, stepX, stepY) {
+        context.save();
+        context.lineWidth = 0.5;
+        context.strokeStyle = color;
+
+        for (var i = stepX + 0.5; i < canvas.width; i += stepX) {
+            context.beginPath();
+            context.moveTo(i, 0 + 0.5);
+            context.lineTo(i, canvas.height + 0.5)
+            context.stroke();
+        }
+
+        for (var i = stepY + 0.5; i < canvas.height; i += stepY) {
+            context.beginPath();
+            context.moveTo(0 + 0.5, i);
+            context.lineTo(canvas.width, i);
+            context.stroke();
+        }
+        context.restore();
+    }
+
+    /**
+     * 坐标转化为canvas坐标
+     * @param x
+     * @param y
+     */
+    function windowToCanvas(x, y) {
+        //返回元素的大小以及位置
+        var bbox = canvas.getBoundingClientRect();
+        return {x: x - bbox.left * (canvas.width / bbox.width), y: y - bbox.top * (canvas.height / bbox.height)};
+
+    }
+
+    //保存和恢复绘图面板
+
+    function saveDrawingSurface() {
+        drawingSurfaceImageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    }
+
+    function restoreDrawingSurface() {
+        context.putImageData(drawingSurfaceImageData, 0, 0);
+    }
+
+    //Rubber bands
+
+    /**
+     * 更新橡皮筋圆形
+     * @param loc
+     */
+    function updateRubberbandCircle(loc) {
+        rubberbandRect.width = Math.abs(loc.x - mousedown.x);
+        rubberbandRect.height = Math.abs(loc.y - mousedown.y);
+        var angle, radius;
+
+        if (mousedown.y === loc.y) {
+            radius = Math.abs(loc.x - mousedown.x);
+            console.log(radius);
+        } else {
+            //反正切函数
+            console.log(rubberbandRect.height + '+' + rubberbandRect.width);
+            radius = Math.sqrt(Math.pow(rubberbandRect.height, 2) + Math.pow(rubberbandRect.width, 2));
+        }
+
+        context.beginPath();
+        context.arc(mousedown.x, mousedown.y, radius, 0, Math.PI * 2, false);
+        context.stroke();
+
+        if (rectangle) {
+            context.fillStyle=strokeStyleSelect.value;
+            context.fill();
+        }
+    }
+
+
+
+    /**
+     * 更新橡皮筋
+     * @param loc
+     */
+    function updateRubberband(loc) {
+
+        updateRubberbandCircle(loc);
+
+
+    }
+
+    //Guidewires辅助线
+
+    /**
+     * 画水平辅助线，占整个宽canvas度
+     * @param y
+     */
+    function drawHorizontalLine(y) {
+        context.beginPath();
+        context.moveTo(0, y + 0.5);
+        context.lineTo(canvas.width, y + 0.5);
+        context.stroke();
+    }
+
+    /**
+     * 画垂直辅助线，占整个canvas高度
+     * @param x
+     */
+    function drawVerticalLine(x) {
+        context.beginPath();
+        context.moveTo(x + 0.5, 0);
+        context.lineTo(x + 0.5, context.canvas.height);
+        context.stroke();
+    }
+
+    /**
+     * 画辅助线，并设置属性
+     * @param x
+     * @param y
+     */
+    function drawGuidewires(x, y) {
+        context.save();
+        context.strokeStyle = 'rgba(0,0,230,0.4)';
+        context.lineWidth = 0.5;
+        drawVerticalLine(x);
+        drawHorizontalLine(y);
+        context.restore();
+    }
+
+    //事件
+
+    /**
+     * 鼠标按下的时候，记录坐标，并设置为拖拽状态
+     * @param e
+     */
+    canvas.onmousedown = function (e) {
+        var loc = windowToCanvas(e.clientX, e.clientY);
+
+        e.preventDefault();
+        saveDrawingSurface();
+        mousedown.x = loc.x;
+        mousedown.y = loc.y;
+        dragging = true;
+    }
+
+    /**
+     * （鼠标按下之后）鼠标移动的时候
+     * 判断拖拽中：更新当前连线的位置
+     * 判断辅助线显示：添加辅助线
+     * @param e
+     */
+    canvas.onmousemove = function (e) {
+
+        var loc;
+        if (dragging) {
+
+            e.preventDefault();
+
+            loc = windowToCanvas(e.clientX, e.clientY);
+            restoreDrawingSurface();
+
+            updateRubberband(loc);
+
+
+            if (guidewires) {
+                drawGuidewires(loc.x, loc.y);
+            }
+        }
+
+    }
+
+    /**
+     * (拖拽完成后)当鼠标松开时，重新获取本点坐标，清除之前的"跟随鼠标移动的线"，更新连线，取消拖拽状态
+     * @param e
+     */
+    canvas.onmouseup = function (e) {
+        loc = windowToCanvas(e.clientX, e.clientY);
+        restoreDrawingSurface();
+        updateRubberband(loc);
+        dragging = false;
+    };
+
+    //控制器的事件
+
+    /**
+     * 清除所有画布图像
+     * @param ev
+     */
+    eraseAllButton.onclick = function (ev) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid('lightgray', 10, 10);
+        saveDrawingSurface();
+    };
+
+    strokeStyleSelect.onchange = function (ev) {
+        context.strokeStyle = strokeStyleSelect.value;
+    };
+
+    guidewireCheckbox.onchange = function (ev) {
+        guidewires = guidewireCheckbox.checked;
+    };
+
+    RectangleCheckbox.onchange = function (ev) {
+        rectangle = RectangleCheckbox.checked;
+    };
+
+    //init
+
+    context.strokeStyle = strokeStyleSelect.value;
+    drawGrid('lightgray', 10, 10);
+
+</script>
+</html>
