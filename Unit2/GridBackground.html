@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网格背景</title>
+    <style>
+        body {
+            line-height: 2em;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0 20%;
+        }
+
+        p {
+            margin: 0 20%;
+            text-indent: 2em;
+        }
+    </style>
+</head>
+<body>
+<h1>欢迎来到CanvasStudy</h1>
+<hr/>
+<h2>第一节</h2>
+<p>欢迎来到我的Canvas教程，在这里你可以学到关于Canvas更加详细的应用，充分了解Canvas的特性，希望得到您的支持。</p>
+<p>我的处女作《Canvas系列教程》在我的Github上正在连载更新，希望能得到您的关注和支持，让我有更多的动力进行创作。
+    教程介绍、教程目录等能在README里查阅。
+    传送门：<a href="https://github.com/827652549/CanvasStudy">https://github.com/827652549/CanvasStudy</a>
+</p>
+<h2>第二节</h2>
+<p>欢迎来到我的Canvas教程，在这里你可以学到关于Canvas更加详细的应用，充分了解Canvas的特性，希望得到您的支持。</p>
+<p>我的处女作《Canvas系列教程》在我的Github上正在连载更新，希望能得到您的关注和支持，让我有更多的动力进行创作。
+    教程介绍、教程目录等能在README里查阅。
+    传送门：<a href="https://github.com/827652549/CanvasStudy">https://github.com/827652549/CanvasStudy</a>
+</p>
+<canvas id="canvas" height="100%" width="100%">canvas not supported</canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    //初始化
+    AutoCanvas();
+    drawGrid('lightgray', 10, 10);
+
+    //窗口伸缩监听
+    window.onresize = function () {
+        AutoCanvas();
+        drawGrid('lightgray', 10, 10);
+    };
+
+    /**
+     * 画网格
+     * @param color 网格线颜色
+     * @param stepX 格子横向间距
+     * @param stepY 格子垂直间距
+     */
+    function drawGrid(color, stepX, stepY) {
+        context.save();
+        context.strokeStyle = color;
+        context.lineWidth = 0.5;
+        for (var i = stepX + 0.5;
+             i < context.canvas.width; i += stepX) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (var i = stepY + 0.5;
+             i < context.canvas.height; i += stepY) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+
+        context.restore();
+    }
+
+    /**
+     * 自动更改画布，当浏览器窗口大小改变当时候调用
+     * @constructor
+     */
+    function AutoCanvas() {
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+    }
+</script>
+</html>
