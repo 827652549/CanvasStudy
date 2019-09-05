@@ -95,6 +95,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 14. [圆和圆弧](https://blog.csdn.net/HuoYiHengYuan/article/details/100516741)
 15. [【项目】画板——圆的实现](https://blog.csdn.net/HuoYiHengYuan/article/details/100529003)
 16. [【项目】数字刻度仪表盘](https://blog.csdn.net/HuoYiHengYuan/article/details/100547808)
+17. [【项目】网格线背景（可作为HTML模版来用）](https://blog.csdn.net/HuoYiHengYuan/article/details/100556626)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
