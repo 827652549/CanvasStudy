@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>圆角三角形，二次方贝塞尔曲线</title>
+</head>
+<body>
+<canvas id="canvas" height="400" width="400" style="border: 1px solid black"></canvas>
+</body>
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d'),
+    TRIANGLE_MARGIN=30,
+    POINT_RADIUS=7,
+    points=[
+        //右下角控制点
+        {x:canvas.width-TRIANGLE_MARGIN,y:canvas.height-TRIANGLE_MARGIN},
+        //右下角锚点
+        {x:canvas.width-TRIANGLE_MARGIN*2,y:canvas.height-TRIANGLE_MARGIN},
+        //左控制点
+        {x:POINT_RADIUS,y:canvas.height/2},
+        //左锚点
+        {x:TRIANGLE_MARGIN,y:canvas.height/2-TRIANGLE_MARGIN},
+        //右上角控制点
+        {x:canvas.width-TRIANGLE_MARGIN,y:TRIANGLE_MARGIN},
+        //右上角锚点
+        {x:canvas.width-TRIANGLE_MARGIN,y:TRIANGLE_MARGIN*2}
+    ];
+
+    //Function……
+    /**
+     * 绘制锚点或控制点的方法封装，以不同的颜色参数绘制
+     * @param x
+     * @param y
+     * @param strokeStyle
+     * @param fillStyle
+     */
+    function drawPoint(x,y,strokeStyle,fillStyle) {
+        context.beginPath();
+        context.fillStyle=fillStyle;
+        context.strokeStyle=strokeStyle;
+        context.lineWidth = 0.5;
+        context.arc(x,y,POINT_RADIUS,0,Math.PI*2,false);
+        context.fill();
+        context.stroke();
+    }
+
+    /**
+     * 绘制所有的贝塞尔带你，锚点或控制点
+     */
+    function drawBezierPoints() {
+        let i,
+            strokeStyle,
+            fillStyle;
+        for (i=0;i<points.length;i++) {
+            fillStyle = i%2===0?'white':'blue';
+            strokeStyle=i%2===0?'blue':'white';
+            drawPoint(points[i].x,points[i].y,strokeStyle,fillStyle);
+        }
+    }
+
+    /**
+     * 绘制圆角矩形
+     */
+    function drawArcTriangle() {
+        context.strokeStyle='#999999';
+        context.fillStyle='cornflowerblue';
+
+        //从右上角的锚点开始绘制
+        context.moveTo(canvas.width-TRIANGLE_MARGIN,TRIANGLE_MARGIN*2);
+
+        context.lineTo(canvas.width-TRIANGLE_MARGIN,canvas.height-TRIANGLE_MARGIN*2);
+
+        context.quadraticCurveTo(points[0].x,points[0].y,points[1].x,points[1].y);
+
+        context.lineTo(TRIANGLE_MARGIN,canvas.height/2+TRIANGLE_MARGIN);
+
+        context.quadraticCurveTo(points[2].x,points[2].y,points[3].x,points[3].y);
+
+        context.lineTo(canvas.width-TRIANGLE_MARGIN*2,TRIANGLE_MARGIN);
+
+        context.quadraticCurveTo(points[4].x,points[4].y,points[5].x,points[5].y);
+        context.fill();
+        context.stroke();
+    }
+
+    //Init……
+    context.clearRect(0,0,canvas.width,canvas.height);
+    drawArcTriangle();
+    drawBezierPoints();
+</script>
+</html>
