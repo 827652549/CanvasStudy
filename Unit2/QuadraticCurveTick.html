@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对勾，二次方贝塞尔曲线</title>
+</head>
+<body>
+<p>这是用三条二次方贝塞尔曲线构成的复选框标记对号<input type="checkbox" checked></p>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.strokeStyle = '#3aa112';
+
+    context.shadowColor = 'rgba(50,50,50,1.0)';
+    context.shadowOffsetX = 3;
+    context.shadowOffsetY = 3;
+    context.shadowBlur = 4;
+
+    context.lineWidth=20;
+    context.lineCap='round';
+
+    context.beginPath();
+    //设定开始点(120.5,130)
+    context.moveTo(120.5,130);
+    //设定控制点(150.8,130)和结束点(160.6,150.5);
+    context.quadraticCurveTo(150.8,130,160.6,150.5);
+    context.quadraticCurveTo(190,250,210.5,160.5);
+    context.quadraticCurveTo(240,100.5,290,70.5);
+
+    context.stroke();
+</script>
+</html>
