@@ -97,6 +97,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 16. [【项目】数字刻度仪表盘](https://blog.csdn.net/HuoYiHengYuan/article/details/100547808)
 17. [【项目】网格线背景（可作为HTML模版来用）](https://blog.csdn.net/HuoYiHengYuan/article/details/100556626)
 18. [二次方贝塞尔曲线(复选框对勾和圆角三角形)](https://blog.csdn.net/HuoYiHengYuan/article/details/100679648)
+19. [三次方贝塞尔曲线](https://blog.csdn.net/HuoYiHengYuan/article/details/100713817)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
