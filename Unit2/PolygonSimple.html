@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单的多边形</title>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+<p>试试选择不同的边数</p>
+<label for="sidesSelects">多边形边数</label>
+<select id="sidesSelects">
+    <option selected value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+</select>
+</body>
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        sidesSelect = document.getElementById('sidesSelects'),
+
+
+
+        Point = function (x, y) {
+            this.x = x;
+            this.y = y;
+        };
+
+    //Function……
+    /**
+     * 获得多边形的所有外接圆顶点
+     * @param centerX
+     * @param centerY
+     * @param radius
+     * @param sides
+     * @param startAngle
+     */
+    function getPolygonPoints(centerX,centerY,radius,sides,startAngle) {
+        let points = [],
+            angle = startAngle||0;
+
+        for (let i=0;i<sides;++i){
+            points.push(new Point(centerX+radius*Math.sin(angle),centerY+radius*Math.cos(angle)));
+            angle += 2*Math.PI/sides;
+        }
+
+        return points;
+    }
+
+    /**
+     * 根据每个顶点的位置，创建多边形的路径
+     * @param centerX
+     * @param centerY
+     * @param radius
+     * @param sides
+     * @param startAngle
+     */
+    function createPolygonPath(centerX,centerY,radius,sides,startAngle) {
+        let points = getPolygonPoints(centerX,centerY,radius,sides,startAngle);
+
+        context.beginPath();
+        context.moveTo(points[0].x,points[0].y);
+
+        for (let i=0;i<sides;++i){
+            context.lineTo(points[i].x,points[i].y);
+        }
+        context.closePath();
+    }
+
+    /**
+     * 绘制多边形
+     */
+    function drawRubberbandShape() {
+        createPolygonPath(canvas.width/2,canvas.height/2,canvas.width/4,parseInt(sidesSelect.value),0);
+        context.stroke();
+    }
+
+    drawRubberbandShape();
+
+    //event
+    sidesSelect.onchange=function () {
+        context.clearRect(0,0,canvas.width,canvas.height);
+        drawRubberbandShape();
+    }
+</script>
+</html>
