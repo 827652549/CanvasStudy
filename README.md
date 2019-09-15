@@ -100,6 +100,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 19. [三次方贝塞尔曲线](https://blog.csdn.net/HuoYiHengYuan/article/details/100713817)
 20. [多边形(三角形、矩形、五边形、六边形……)](https://blog.csdn.net/HuoYiHengYuan/article/details/100748594)
 21. [【项目】画板——多边形的实现](https://blog.csdn.net/HuoYiHengYuan/article/details/100788013)
+22. [isPointInPath()判断在路径内。（实现拖拽小方块）](https://blog.csdn.net/HuoYiHengYuan/article/details/100836422)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
