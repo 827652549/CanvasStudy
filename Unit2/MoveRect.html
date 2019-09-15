@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽小方块</title>
+
+    <style>
+        #canvas {
+            cursor: default;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="400" height="400">Canvas not supported</canvas>
+<p>拖拽方块并实时重绘</p>
+</body>
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        //初始时的矩形属性
+        initX = 10,
+        initY = 10,
+        initWidth = 100,
+        initHeight = 100,
+
+        isDrag = false,
+
+        //多边形存储在这个地方
+        polygons = {
+            fillStyle: 'lightgray',
+            strokeStyle: 'blue',
+            loc: {x: 0, y: 0},
+            height: initHeight,
+            width: initWidth,
+            offsetX: 0,
+            offsetY: 0
+        };
+
+
+    //Function……
+
+    /**
+     * 绘制初试状态的矩形
+     */
+    let drawInitRect = () => {
+        context.fillStyle = polygons.fillStyle;
+        context.strokeStyle = polygons.strokeStyle;
+        context.rect(initX, initY, initWidth, initHeight);
+        polygons.loc.x = initX;
+        polygons.loc.y = initY;
+        polygons.width = initWidth;
+        polygons.height = initHeight;
+        context.fill();
+        context.stroke();
+    };
+    //Event……
+
+    /**
+     * 当鼠标按下式
+     * @param ev
+     */
+    canvas.onmousedown = ev => {
+        isDrag = context.isPointInPath(ev.clientX, ev.clientY);
+        polygons.offsetX = ev.clientX - polygons.loc.x;
+        polygons.offsetY = ev.clientY - polygons.loc.y;
+        polygons.loc.x = ev.clientX;
+        polygons.loc.y = ev.clientY;
+    };
+
+    /**
+     * 鼠标移动时
+     * @param ev
+     */
+    canvas.onmousemove = ev => {
+        if (isDrag) {
+            context.beginPath();
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.rect(ev.clientX - polygons.offsetX, ev.clientY - polygons.offsetY, initWidth, initHeight);
+            context.fill();
+            context.stroke();
+        } else {
+            //鼠标经过的时候是否需要变小手
+            if (context.isPointInPath(ev.clientX, ev.clientY)) {
+                //设置光标状态
+                canvas.style.cursor = 'pointer';
+            } else {
+                canvas.style.cursor = 'default';
+
+            }
+
+        }
+    };
+
+    canvas.onmouseup = ev => {
+        isDrag = false;
+        polygons.loc.x = ev.clientX - polygons.offsetX;
+        polygons.loc.y = ev.clientY - polygons.offsetY;
+
+    };
+
+    //Init……
+
+    drawInitRect();
+</script>
+</html>
