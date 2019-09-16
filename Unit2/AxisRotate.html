@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>坐标轴的绘制</title>
+    <title>坐标轴的旋转</title>
 </head>
 <body>
 <canvas id="canvas" width="400" height="300" style="border: 1px solid black"></canvas>
@@ -44,7 +44,7 @@
 
     //Function……
 
-    context.rotate(-Math.PI/8);
+
 
 
     /**
@@ -154,6 +154,7 @@
     }
 
     //Initialization……
+    context.rotate(-Math.PI/8);
     drawGrid('lightgray', 10, 10);
     drawAxis();
 
