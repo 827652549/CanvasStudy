@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图像合成</title>
+    <style>
+        #canvas {
+            border: 1px solid cornflowerblue;
+            position: absolute;
+            left: 150px;
+            top: 10px;
+            background: #eeeeee;
+            border: thin solid #aaaaaa;
+            cursor: pointer;
+            -webkit-box-shadow: rgba(200, 200, 255, 0.9) 5px 5px 10px;
+            -moz-box-shadow: rgba(200, 200, 255, 0.9) 5px 5px 10px;
+            box-shadow: rgba(200, 200, 255, 0.9) 5px 5px 10px;
+        }
+    </style>
+</head>
+<body>
+<select size="11" id="compositingSelect">
+    <option value="source-atop">source-atop</option>
+    <option value='source-in'>source-in</option>
+    <option value='source-out'>source-out</option>
+    <option value='source-over'>source-over (default)</option>
+    <option value='destination-atop'>destination-atop</option>
+    <option value='destination-in'>destination-in</option>
+    <option value='destination-out'>destination-out</option>
+    <option value='destination-over'>destination-over</option>
+    <option value='lighter'>lighter</option>
+    <option value='copy'>copy</option>
+    <option value='xor'>xor</option>
+</select>
+<canvas id="canvas" width="600" height="420">Canvas not supports</canvas>
+</body>
+<script>
+    'use strict';
+
+    let context = document.getElementById('canvas').getContext('2d'),
+        selectElement = document.getElementById('compositingSelect');
+
+    //Function……
+
+    /**
+     * 绘制文字
+     */
+    let drawText = () => {
+        context.save();
+
+        context.shadowColor = 'rgba(100, 100, 150, 0.8)';
+        context.shadowOffsetX = 5;
+        context.shadowOffsetY = 5;
+        context.shadowBlur = 10;
+
+        context.fillStyle = 'cornflowerblue';
+        context.fillText('苏一恒', 20, 250);
+
+        context.strokeStyle = 'yellow';
+        context.strokeText('苏一恒', 20, 250);
+
+
+        context.restore();
+    };
+
+    //Event handlers……
+
+    let windowToCanvas = (canvas, x, y) => {
+        let bbox = canvas.getBoundingClientRect();
+        return {
+          x:x-bbox.left*(canvas.width/bbox.width),
+          y:y-bbox.top*(canvas.height/bbox.height)
+        };
+
+    };
+
+    context.canvas.onmousemove=e=>{
+        let loc = windowToCanvas(context.canvas,e.clientX,e.clientY);
+        context.clearRect(0,0,context.canvas.width,context.canvas.height);
+        drawText();
+
+        context.save();
+
+        //设置选项即为全局合成属性
+        context.globalCompositeOperation=selectElement.value;
+        context.beginPath();
+        context.arc(loc.x,loc.y,100,0,Math.PI*2,false);
+        context.fillStyle='orange';
+        context.stroke();
+        context.fill();
+
+        context.restore();
+    }
+
+    //Init……
+
+    selectElement.selectedIndex=3;
+    context.lineWidth=0.5;
+    context.font='128pt Comic-sans';
+    drawText();
+</script>
+</html>
