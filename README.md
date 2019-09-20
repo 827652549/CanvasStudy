@@ -105,6 +105,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 24. [坐标轴的平移(translate)、缩放(scale)、旋转(totate)、镜像](https://blog.csdn.net/HuoYiHengYuan/article/details/100907020)
 25. [【项目】画板——交互式旋转多边形](https://blog.csdn.net/HuoYiHengYuan/article/details/100972961)
 26. [自定义坐标变换，transform()和setTransform()](https://blog.csdn.net/HuoYiHengYuan/article/details/101023950)
+27. [图像合成，globalCompositeOperation属性](https://blog.csdn.net/HuoYiHengYuan/article/details/101056448)
 ### 第三章·文本
 ### 第四章·图像与视频
 ### 第五章·动画
