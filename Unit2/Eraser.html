@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>橡皮擦的简单演示</title>
+</head>
+<body>
+<canvas id="canvas" height="500" width="500">Canvas not support</canvas>
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.rect(0, 0, canvas.width, canvas.height);
+    context.fill();
+
+    context.beginPath();
+    canvas.onmousemove = ev => {
+
+        context.save();
+        let mouse = windowToCanvas(ev);
+        //设定橡皮擦大小
+        context.rect(mouse.x - 10, mouse.y - 10, 20, 20);
+        context.clip();
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.restore();
+    };
+
+    function windowToCanvas(e) {
+        let x = e.x || e.clientX,
+            y = e.y || e.clientY,
+            bbox = canvas.getBoundingClientRect();
+
+        return {
+            x: x - bbox.left * (canvas.width / bbox.width),
+            y: y - bbox.top * (canvas.height / bbox.height)
+        };
+    }
+</script>
+</body>
+</html>
