@@ -110,6 +110,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 29. [剪辑区域，使用clip()实现橡皮擦](https://blog.csdn.net/HuoYiHengYuan/article/details/101467804)
 30. [【项目】画板——橡皮擦工具](https://blog.csdn.net/HuoYiHengYuan/article/details/101478536)
 ### 第三章·文本
+1. [文本描边(strokeText)、填充(fillText)、阴影效果](https://blog.csdn.net/HuoYiHengYuan/article/details/101599016)
 ### 第四章·图像与视频
 ### 第五章·动画
 ### 第六章·精灵
