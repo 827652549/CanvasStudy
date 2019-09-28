@@ -111,6 +111,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 30. [【项目】画板——橡皮擦工具](https://blog.csdn.net/HuoYiHengYuan/article/details/101478536)
 ### 第三章·文本
 1. [文本描边(strokeText)、填充(fillText)、阴影效果](https://blog.csdn.net/HuoYiHengYuan/article/details/101599016)
+2. [渐变文本、图案文本](https://blog.csdn.net/HuoYiHengYuan/article/details/101652385)
 ### 第四章·图像与视频
 ### 第五章·动画
 ### 第六章·精灵
