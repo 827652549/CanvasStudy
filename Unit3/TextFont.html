@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+    Author:苏一恒
+    Date:2019-09-29 14:52
+    Motto:
+        The best time to plant trees is ten years ago, followed by now. 
+        种树最好的时间是十年前，其次是现在。
+ -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文字的font属性</title>
+    <style>
+        body {
+            background: #eeeeee;
+        }
+
+        #canvas {
+            background: #ffffff;
+            margin-top: 5px;
+            margin-left: 10px;
+            -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<canvas id='canvas' width="850" height="440">canvas not supports</canvas>
+
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        /**
+         * 左列的所有字体 palatino字体集的变种
+         * @type {Array}
+         *
+         * palatino是一种常用的英文衬线字体
+         */
+        LEFT_COLUMN_FONTS = [
+            '2em palatino', 'bolder 2em palatino',
+            'lighter 2em patatino', 'italic 2em palatino',
+            'oblique small-caps 24px palatino', 'bold 14pt palatino',
+            'xx-large palatino', 'italic xx-larrge palatino'
+        ],
+
+        /**
+         * 右边的所有字体 网络安全字型
+         * @type {string[]}
+         */
+        RIGHT_COLUMN_FONTS = [
+            'oblique 1.5em lucida console', 'x-large fantasy',
+            'italic 28px monaco', 'italic large copperplate',
+            '36px century', '28px tahoma',
+            '28px impact', '1.7em verdana'
+        ],
+
+        LEFT_COLUMN_X = 50,
+        RIGHT_COLUMN_X = 500,
+        DELTA_Y = 50,
+        TOP_Y = 50,
+        y = 0;
+
+    /**
+     * 绘制背景网格线
+     */
+    let drawBackground = () => {
+        let STEP_Y = 12,
+            i = context.canvas.height;
+
+        context.strokeStyle = 'rgba(0,0,200,0.225)';
+        context.lineWidth = 0.5;
+
+        context.save();
+        context.restore();
+
+        while (i > STEP_Y * 4) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+            i -= STEP_Y;
+        }
+
+        context.save();
+
+        context.strokeStyle = 'rgba(100,0,0,0.3)';
+        context.lineWidth = 1;
+
+        context.beginPath();
+
+        context.moveTo(35, 0);
+        context.lineTo(35, context.canvas.height);
+        context.stroke();
+
+        context.restore();
+    };
+
+    drawBackground();
+
+    context.fillStyle = 'blue';
+
+    //绘制左列所有文本
+    LEFT_COLUMN_FONTS.forEach(font => {
+        context.font = font;
+        context.fillText(font, LEFT_COLUMN_X, y += DELTA_Y);
+    });
+
+    y = 0;
+
+    //绘制右列所有文本
+    RIGHT_COLUMN_FONTS.forEach( function (font) {
+        context.font = font;
+        context.fillText(font, RIGHT_COLUMN_X, y += DELTA_Y);
+    });
+
+</script>
+</body>
+</html>
