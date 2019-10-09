@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+    Author:苏一恒
+    Date:2019/10/9 14:10
+    Motto:
+        The best time to plant trees is ten years ago, followed by now. 
+        种树最好的时间是十年前，其次是现在。
+ -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文字定位</title>
+    <style>
+        body {
+            background: #eeeeee;
+        }
+
+        #canvas {
+            background: #ffffff;
+            margin-top: 5px;
+            margin-left: 10px;
+            -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<canvas id='canvas' width='780' height='440'>canvas not supports</canvas>
+
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        fontHeight = 24,
+        alignValues = ['start','center','end'],
+        baseLineValue = ['top','middle','bottom','alphabetic', 'ideographic', 'hanging'],
+        x,y;
+
+    //Function……
+
+    let drawGrid=(color, stepx, stepy)=> {
+        context.save();
+
+        context.strokeStyle = color;
+        context.fillStyle = '#ffffff';
+        context.lineWidth = 0.5;
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+        for (let i = stepx + 0.5; i < context.canvas.width; i += stepx) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (let i = stepy + 0.5; i < context.canvas.height; i += stepy) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+
+        context.restore();
+    };
+
+    /**
+     * 绘制（x，y）的标记点
+     */
+    let drawTextMarker=()=>{
+      context.fillStyle='yellow';
+      context.fillRect(x,y,7,7);
+      context.strokeRect(x,y,7,7);
+    };
+
+    /**
+     * 绘制文本
+     * @param text
+     * @param textAlign
+     * @param textBaseLine
+     */
+    let drawText=(text,textAlign,textBaseLine)=>{
+        if (textAlign)context.textAlign = textAlign;
+        if (textBaseLine)context.textBaseline=textBaseLine;
+
+        context.fillStyle='cornflowerblue';
+        context.fillText(text,x,y);
+    };
+
+    /**
+     * 绘制文本的线
+     */
+    let drawTextLine=()=>{
+        context.strokeStyle='gray';
+
+        context.beginPath();
+        context.moveTo(x,y);
+        context.lineTo(x+738,y);
+        context.stroke();
+    };
+
+
+    //Init……
+    context.font='oblique normal bold 24px palatino';
+
+    drawGrid('lightgray',10,10);
+
+    for (let align = 0;align<alignValues.length;++align){
+        for (let baseline = 0;baseline<baseLineValue.length;baseline++){
+            x= 20+align*fontHeight*15;
+            y=20+baseline*fontHeight*3;
+
+            drawText(alignValues[align]+'/'+baseLineValue[baseline],alignValues[align],baseLineValue[baseline]);
+            drawTextMarker();
+            drawTextLine();
+        }
+    }
+
+</script>
+</body>
+</html>
