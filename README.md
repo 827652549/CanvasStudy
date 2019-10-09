@@ -113,6 +113,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 1. [文本描边(strokeText)、填充(fillText)、阴影效果](https://blog.csdn.net/HuoYiHengYuan/article/details/101599016)
 2. [渐变文本、图案文本](https://blog.csdn.net/HuoYiHengYuan/article/details/101652385)
 3. [font及相关属性(font-style、font-variant、font-weight、font-size、line-height、font-family)](https://blog.csdn.net/HuoYiHengYuan/article/details/101677114)
+4. [font的水平对齐textAlign和垂直对齐textBaseline](https://blog.csdn.net/HuoYiHengYuan/article/details/102459134)
 ### 第四章·图像与视频
 ### 第五章·动画
 ### 第六章·精灵
