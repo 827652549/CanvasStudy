@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--
+    Author:苏一恒
+    Date:2019/10/23 09:08
+    Motto:
+        The best time to plant trees is ten years ago, followed by now. 
+        种树最好的时间是十年前，其次是现在。
+ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>坐标轴的绘制</title>
+</head>
+<body>
+<canvas id="canvas" width="400" height="300"></canvas>
+</body>
+<script>
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        //外边距
+        AXIS_MARGIN = 40,
+        //原点，将之设置到画布左下区域
+        AXIS_ORIGIN = {x: AXIS_MARGIN, y: canvas.height - AXIS_MARGIN},
+
+        //y轴顶点位置
+        AXIS_TOP = AXIS_MARGIN,
+        //x轴顶点位置
+        AXIS_RIGHT = canvas.width - AXIS_MARGIN,
+
+        //横向刻度线间距
+        HORIZONTAL_TICK_SPACING = 10,
+        //垂直刻度线间距
+        VERTICAL_TICK_SPACING = 10,
+
+        //X轴长度
+        AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x,
+        //y轴长度
+        AXIS_HEIGHT = AXIS_ORIGIN.y - AXIS_TOP,
+
+        //y轴上的点的最大值
+        NUM_VERTICAL_TICKS = AXIS_HEIGHT / VERTICAL_TICK_SPACING,
+        NUM_HORIZONTAL_TICKS = AXIS_WIDTH / HORIZONTAL_TICK_SPACING,
+
+        TICK_WIDTH = 10,
+        TICKS_LINEWIDTH = 0.5,
+        TICK_COLOR = 'navy',
+
+        AXIS_LINEWIDTH = 1.0,
+        AXIS_COLOR = 'blue';
+
+        //数字与坐标轴的距离
+        SPACE_BETWEEN_LABELS_AND_AXIS =  15;
+
+
+    //Function……
+
+    /**
+     * 背景网格线
+     * @param color
+     * @param stepX
+     * @param stepY
+     */
+    let drawGrid=(color, stepX, stepY)=> {
+        context.strokeStyle = color;
+        context.lineWidth = 0.5;
+
+        for (let i = stepX + 0.5; i < context.canvas.width; i += stepX) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (let i = stepY + 0.5; i < context.canvas.height; i += stepY) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+    };
+
+    /**
+     * 画坐标轴
+     */
+    let drawAxis=() =>{
+        context.save();
+        context.strokeStyle = AXIS_COLOR;
+        context.lineWidth = AXIS_LINEWIDTH;
+
+        drawHorizontalAxis();
+        drawVerticalAxis();
+
+        context.lineWidth = TICKS_LINEWIDTH;
+        context.strokeStyle = TICK_COLOR;
+
+        drawVerticalAxisTicks();
+        drawHorizontalAxisTicks();
+
+        context.restore();
+    };
+
+    /**
+     * 绘制x轴
+     */
+    let drawHorizontalAxis=()=> {
+        context.beginPath();
+        context.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        context.lineTo(AXIS_RIGHT, AXIS_ORIGIN.y);
+        context.stroke();
+    };
+
+
+    /**
+     * 绘制y轴
+     */
+    let drawVerticalAxis=()=> {
+        context.beginPath();
+        context.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        context.lineTo(AXIS_ORIGIN.x, AXIS_TOP);
+        context.stroke();
+    };
+
+    /**
+     * 绘制y轴刻度
+     */
+    let drawVerticalAxisTicks=()=> {
+        //小刻度长度的临时变量
+        let deltaY;
+
+        for (let i = 1; i < NUM_VERTICAL_TICKS; i++) {
+            context.beginPath();
+            //每5第五个刻度为长的小刻度
+            deltaY = i % 5 === 0 ? TICK_WIDTH : TICK_WIDTH / 2;
+            context.moveTo(AXIS_ORIGIN.x - deltaY, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            context.lineTo(AXIS_ORIGIN.x + deltaY, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            context.stroke();
+
+        }
+    };
+
+    /**
+     * 绘制x轴刻度
+     */
+    let drawHorizontalAxisTicks=()=> {
+        //小刻度长度的临时变量
+        let deltaY;
+
+        for (let i = 1; i < NUM_HORIZONTAL_TICKS; i++) {
+            context.beginPath();
+            //每5第五个刻度为长的小刻度
+            deltaY = i % 5 === 0 ? TICK_WIDTH : TICK_WIDTH / 2;
+
+            context.moveTo(AXIS_ORIGIN.x+i*HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y-deltaY);
+            context.lineTo(AXIS_ORIGIN.x+i*HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y+deltaY);
+            context.stroke();
+
+        }
+    };
+
+    /**
+     * 添加坐标轴数字标签
+     */
+    let drawAxisLabels=()=> {
+        context.fillStyle = 'blue';
+        drawHorizontalAxisLabels();
+        drawVerticalAxisLabels();
+    };
+
+    /**
+     * 添加横坐标数字标签
+     */
+    let drawHorizontalAxisLabels=()=> {
+        context.textAlign = 'center';
+        context.textBaseline = 'top';
+
+        for (let i=0; i <= NUM_HORIZONTAL_TICKS; ++i) {
+            if (i % 5 === 0) {
+                context.fillText(i,
+                    AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
+                    AXIS_ORIGIN.y + SPACE_BETWEEN_LABELS_AND_AXIS);
+            }
+        }
+    };
+
+    /**
+     * 添加垂直坐标数字标签
+     */
+    let drawVerticalAxisLabels=()=> {
+        context.textAlign = 'right';
+        context.textBaseline = 'middle';
+
+        for (let i=0; i <= NUM_VERTICAL_TICKS; ++i) {
+            if (i % 5 === 0) {
+                context.fillText(i,
+                    AXIS_ORIGIN.x - SPACE_BETWEEN_LABELS_AND_AXIS,
+                    AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            }
+        }
+    };
+    //Initialization……
+    drawGrid('lightgray', 10, 10);
+    drawAxis();
+    drawAxisLabels();
+
+
+</script>
+</html>
