@@ -45,6 +45,7 @@
      */
     function getPolygonPoints(centerX,centerY,radius,sides,startAngle) {
         let points = [],
+            //这里的angle是基于钟表0点的位置开始计算，0点位置为0度，3点位置为π/2度
             angle = startAngle||0;
 
         for (let i=0;i<sides;++i){
