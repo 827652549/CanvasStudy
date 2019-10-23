@@ -115,6 +115,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 3. [font及相关属性(font-style、font-variant、font-weight、font-size、line-height、font-family)](https://blog.csdn.net/HuoYiHengYuan/article/details/101677114)
 4. [font的水平对齐textAlign和垂直对齐textBaseline](https://blog.csdn.net/HuoYiHengYuan/article/details/102459134)
 5. [文本宽度的度量measureText()](https://blog.csdn.net/HuoYiHengYuan/article/details/102498121)
+6. [【项目】给坐标轴添加数字标签](https://blog.csdn.net/HuoYiHengYuan/article/details/102695375)
 ### 第四章·图像与视频
 ### 第五章·动画
 ### 第六章·精灵
