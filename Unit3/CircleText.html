@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+    Author:苏一恒
+    Date:2019/10/24 10:53
+    Motto:
+        The best time to plant trees is ten years ago, followed by now. 
+        种树最好的时间是十年前，其次是现在。
+ -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>环形文字(1024节日快乐)</title>
+    <style>
+        body {
+            background: #eeeeee;
+            padding: 0;
+            margin: 0;
+        }
+
+        #canvas {
+            background: #ffffff;
+
+            -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<canvas id='canvas' width="650px" height="450px" style="width: 100%;height: 100%;">canvas not supports</canvas>
+
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        //圆心半径
+        CENTROID_RADIUS = 10,
+        CENTROID_STROKE_STYLE = 'rgba(0, 0, 0, 0.5)',
+        CENTROID_FILL_STYLE = 'rgba(80, 190, 240, 0.6)',
+
+        GUIDEWIRE_STROKE_STYLE = 'goldenrod',
+        GUIDEWIRE_FILL_STYLE = 'rgba(85, 190, 240, 0.6)',
+
+        TEXT_FILL_STYLE = 'rgba(100, 130, 240, 0.5)',
+        TEXT_STROKE_STYLE = 'rgba(200, 0, 0, 0.7)',
+        TEXT_SIZE = 64,
+
+        circle = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 180
+        },
+
+        startAngle = Math.PI*2+Math.PI/2,
+        endAngle = Math.PI/8+Math.PI/2,
+        text = '祝各位工程师1024节日快乐。';
+
+    //Function……
+    /**
+     * 画网格线
+     * @param color
+     * @param stepx
+     * @param stepy
+     */
+    let drawGrid = (color, stepx, stepy) => {
+        context.save()
+
+        context.shadowColor = undefined;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+
+        context.strokeStyle = color;
+        context.fillStyle = '#ffffff';
+        context.lineWidth = 0.5;
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+        for (let i = stepx + 0.5; i < context.canvas.width; i += stepx) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        for (let i = stepy + 0.5; i < context.canvas.height; i += stepy) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+
+        context.restore();
+    };
+
+    /**
+     * 画圆心
+     */
+    let drawCentroid = () => {
+        context.beginPath();
+        context.save();
+        context.strokeStyle = CENTROID_STROKE_STYLE;
+        context.fillStyle = CENTROID_FILL_STYLE;
+        context.textBaseline="middle";
+        context.textAlign="center";
+        context.font='30px Lucida Sans';
+        context.fillText('By 苏一恒',circle.x, circle.y);
+        // context.arc(circle.x, circle.y, CENTROID_RADIUS, 0, Math.PI * 2, false);
+        context.stroke();
+        context.fill();
+        context.restore();
+    };
+
+    /**
+     * 绘制环形文字
+     * @param{string} string 传入的文字
+     * @param startAngle 起始角
+     * @param endAngle 末尾角
+     */
+    let drawCircularText = (string, startAngle, endAngle) => {
+        let radius = circle.radius,
+            angleDecrement = (startAngle - endAngle) / (string.length - 1),
+            angle = parseFloat(startAngle),
+            index = 0,
+            character;
+
+        context.save();
+        context.fillStyle=TEXT_FILL_STYLE;
+        context.strokeStyle=TEXT_STROKE_STYLE;
+        context.font=TEXT_SIZE+'px Lucida Sans';
+
+        while(index < string.length){
+            //获取传入的字符串的每个字符
+            character = string.charAt(index);
+
+            context.save();
+            context.beginPath();
+            //位移到每个字符的指定位置
+            context.translate(circle.x+Math.cos(angle)*radius,circle.y - Math.sin(angle)*radius);
+
+            //旋转坐标系到每个字符应该达到到角度
+            context.rotate(Math.PI/2-angle);
+            context.fillText(character,0,0);
+            context.strokeText(character,0,0);
+
+            //角度递减
+            angle -= angleDecrement;
+
+            index++;
+
+            context.restore();
+        }
+    };
+
+
+    //Init
+    let init=(startAngle,endAngle)=>{
+        context.shadowOffsetX=15;
+        context.shadowOffsetY=15;
+        context.shadowBlur=8;
+        context.shadowColor='rgba(0,0,0,0.4)';
+
+        context.textAlign='center';
+        context.textBaseline='middle';
+
+        drawGrid('lightgray',10,10);
+        drawCentroid();
+        drawCircularText(text,startAngle,endAngle);
+    };
+    init(startAngle,endAngle);
+
+    setInterval(()=> {
+        context.clearRect(canvas.width,canvas.height,0,0);
+        init(startAngle+=Math.PI/250,endAngle+=Math.PI/250);
+    },1000/24);//24帧
+
+    console.log('好吧，这里是一个彩蛋。');
+    console.log('虽说ITer是擅长自黑的团体，但是呢，如果我们将"程序员"的称呼变成"工程师"，那对于我们来说，在孩子面前是不是就有了更高的威望呢？');
+
+</script>
+</body>
+</html>
