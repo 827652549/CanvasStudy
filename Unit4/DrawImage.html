@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+    Author:苏一恒
+    Date:2019/10/28 12:39
+    Motto:
+        The best time to plant trees is ten years ago, followed by now. 
+        种树最好的时间是十年前，其次是现在。
+ -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>图像的绘制</title>
+    <style>
+        body {
+            background: #eeeeee;
+        }
+
+        #canvas {
+            background: #ffffff;
+            margin-top: 5px;
+            margin-left: 10px;
+            -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<canvas id='canvas' height="400" width="600">canvas not supports</canvas>
+
+<script>
+    'use strict';
+
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        image = new Image();
+
+    image.src='../images/waterfall.png';
+    image.onload = () => {
+        context.drawImage(image,0,0);
+    }
+
+</script>
+</body>
+</html>
