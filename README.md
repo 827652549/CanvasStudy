@@ -119,6 +119,7 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 7. [【项目】环形文字](https://blog.csdn.net/HuoYiHengYuan/article/details/102721153)
 ### 第四章·图像与视频
 1. [将图像和视频帧绘制到canvas中](https://blog.csdn.net/HuoYiHengYuan/article/details/102779152)
+2. [图片缩放到canvas大小](https://blog.csdn.net/HuoYiHengYuan/article/details/102797954)
 ### 第五章·动画
 ### 第六章·精灵
 ### 第七章·物理效果
