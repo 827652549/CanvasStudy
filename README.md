@@ -3,10 +3,10 @@
 
 ## 关于Canvas（About Canvas）
 >Canvas API 提供了一个通过JavaScript和HTML的&lt;canvas&gt;元素来绘制图形的方式。它可以用于动画、游戏画面、数据可视化、图片编辑以及实时视频处理等方面。
-
+>
 >Canvas API主要聚焦于2D图形。而同样使用&lt;canvas&gt;元素的 WebGL API 则用于绘制硬件加速的2D和3D图形。
 
-Canvas可操作的层面是像素级别的，你觉得还有什么它做不到吗？
+&emsp;&emsp;Canvas可操作的层面是像素级别的，你觉得还有什么它做不到吗？
 
 ## 介绍（Introduce）
 &emsp;&emsp;本教程是一套详细介绍Canvas的系列学习教程同时也是查阅工具，以实例为主，采用由泛到精的学习结构，所有的小节都有单独的教程页面和HTML文件。
@@ -48,18 +48,9 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 
 &emsp;&emsp;在之后都更新中，会将所有的演示Demo的在线链接和说明都贴到README中方便大家使用。
 
----
-
+## <span id="contents"></span> 教程目录（Contents） 
 - 如果你打算系统性学习Canvas，推荐您按照顺序学习，在一定程度上能够节省您的时间。
 - 如果你是要了解某个特性或定位BUG，直接找到对应教程，进入链接查看详细说明和示例。
-
-## 另外（Additional）
-
-&emsp;&emsp;在教程之中，我省略了一部分方法的参数介绍，因为你能很容易在网上找到更权威的参数说明，便不再过多解释。
-
-&emsp;&emsp;**更新顺序会按照章节顺序更新，更新仍在继续，请保持关注和支持**。
-
-## <span id="contents"></span> 教程目录（Contents） 
 ### 第一章·基础知识
 1. [设置Canvas元素width和height的两种不同方式](https://blog.csdn.net/HuoYiHengYuan/article/details/98768351)
 2. [toDataUrl()的使用](https://blog.csdn.net/HuoYiHengYuan/article/details/99671708)
@@ -120,13 +111,13 @@ Canvas可操作的层面是像素级别的，你觉得还有什么它做不到�
 ### 第四章·图像与视频
 1. [将图像和视频帧绘制到canvas中](https://blog.csdn.net/HuoYiHengYuan/article/details/102779152)
 2. [图片缩放到canvas大小](https://blog.csdn.net/HuoYiHengYuan/article/details/102797954)
-### 第五章·动画
-### 第六章·精灵
-### 第七章·物理效果
-### 第八章·碰撞检测
-### 第九章·游戏开发
-### 第十章·自定义控件
-### 第十一章·移动平台开发
+
+## 另外（Additional）
+
+&emsp;&emsp;在教程之中，我省略了一部分方法的参数介绍，因为你能很容易在网上找到更权威的参数说明，便不再过多解释。
+
+&emsp;&emsp;**更新顺序会按照章节顺序更新，更新仍在继续，请保持关注和支持**。
+
 ## 联系（Contact）
 &emsp;&emsp;**欢迎联系我提建议。**
 - 作者：苏一恒
