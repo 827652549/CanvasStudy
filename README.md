@@ -51,7 +51,9 @@
 ## <span id="contents"></span> 教程目录（Contents） 
 - 如果你打算系统性学习Canvas，推荐您按照顺序学习，在一定程度上能够节省您的时间。
 - 如果你是要了解某个特性或定位BUG，直接找到对应教程，进入链接查看详细说明和示例。
+
 ### 第一章·基础知识
+
 1. [两套width和height](https://blog.csdn.net/HuoYiHengYuan/article/details/98768351)
 2. [canvas转图片](https://blog.csdn.net/HuoYiHengYuan/article/details/99671708)
 3. [toBlob()转Blob](https://blog.csdn.net/HuoYiHengYuan/article/details/99674215)
@@ -69,7 +71,9 @@
 15. [打印Canvas的内容](https://blog.csdn.net/HuoYiHengYuan/article/details/100017900)
 16. [数学知识:代数方程、三角函数、向量运算](https://blog.csdn.net/HuoYiHengYuan/article/details/100045570)
 17. [第一章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/100048001)
+
 ### 第二章·绘制
+
 1. [Canvas绘制模型：canvas的浏览器渲染过程原理](https://blog.csdn.net/HuoYiHengYuan/article/details/100051229)
 2. [矩形的绘制](https://blog.csdn.net/HuoYiHengYuan/article/details/100060912)
 3. [颜色与透明度](https://blog.csdn.net/HuoYiHengYuan/article/details/100080538)
@@ -101,7 +105,9 @@
 29. [剪辑区域，使用clip()实现橡皮擦](https://blog.csdn.net/HuoYiHengYuan/article/details/101467804)
 30. [【项目】画板——橡皮擦工具](https://blog.csdn.net/HuoYiHengYuan/article/details/101478536)
 31. [第二章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/101480019)
+
 ### 第三章·文本
+
 1. [文本描边(strokeText)、填充(fillText)、阴影效果](https://blog.csdn.net/HuoYiHengYuan/article/details/101599016)
 2. [渐变文本、图案文本](https://blog.csdn.net/HuoYiHengYuan/article/details/101652385)
 3. [font及相关属性(font-style、font-variant、font-weight、font-size、line-height、font-family)](https://blog.csdn.net/HuoYiHengYuan/article/details/101677114)
@@ -109,8 +115,10 @@
 5. [文本宽度的度量measureText()](https://blog.csdn.net/HuoYiHengYuan/article/details/102498121)
 6. [【项目】给坐标轴添加数字标签](https://blog.csdn.net/HuoYiHengYuan/article/details/102695375)
 7. [【项目】环形文字](https://blog.csdn.net/HuoYiHengYuan/article/details/102721153)
-7. [第三章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/102756052)
+8. [第三章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/102756052)
+
 ### 第四章·图像与视频
+
 1. [将图像和视频帧绘制到canvas中](https://blog.csdn.net/HuoYiHengYuan/article/details/102779152)
 2. [图片缩放到canvas大小](https://blog.csdn.net/HuoYiHengYuan/article/details/102797954)
 
