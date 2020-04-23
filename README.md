@@ -104,7 +104,8 @@
 28. [【项目】鼠标控制文字旋转缩放](https://blog.csdn.net/HuoYiHengYuan/article/details/101397222)
 29. [剪辑区域，使用clip()实现橡皮擦](https://blog.csdn.net/HuoYiHengYuan/article/details/101467804)
 30. [【项目】画板——橡皮擦工具](https://blog.csdn.net/HuoYiHengYuan/article/details/101478536)
-31. [第二章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/101480019)
+31. [任意圆角多边形](https://blog.csdn.net/HuoYiHengYuan/article/details/105701602)
+32. [第二章-章末小结](https://blog.csdn.net/HuoYiHengYuan/article/details/101480019)
 
 ### 第三章·文本
 

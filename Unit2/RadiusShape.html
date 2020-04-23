@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义圆角</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>已知数组 [{ x, y, radius }, ...], 在canvas中绘制出对应图形</div>
+<canvas id="canvas" width="500" height="500"></canvas>
+</body>
+<script>
+    let canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    /**
+     * json说明，几何点应当按照顺时针方向以此填入。
+     */
+    let json = [
+        //正方形
+        // {
+        //     x:10,
+        //     y:10,
+        //     radius:0
+        // },
+        // {
+        //     x:70,
+        //     y:10,
+        //     radius:0
+        // },
+        // {
+        //     x:70,
+        //     y:70,
+        //     radius:0
+        // },
+        // {
+        //     x:10,
+        //     y:70,
+        //     radius:0
+        // },
+
+
+        //  奇怪的六边形
+        // {
+        //     x:10,
+        //     y:10,
+        //     radius:1000
+        // },
+        // {
+        //     x:70,
+        //     y:30,
+        //     radius:100000
+        // },
+        // {
+        //     x:60,
+        //     y:50,
+        //     radius:0
+        // },
+        // {
+        //     x:50,
+        //     y:50,
+        //     radius:10
+        // },
+        // {
+        //     x:60,
+        //     y:40,
+        //     radius:10
+        // },
+        // {
+        //     x:40,
+        //     y:30,
+        //     radius:100
+        // },
+
+
+        // // 不规则的四边形
+        // {
+        //     x: 286 / 2,
+        //     y: 293 / 2,
+        //     radius: 4000 / 2
+        // },
+        // {
+        //     x: 400 / 2,
+        //     y: 200 / 2,
+        //     radius: 50 / 2
+        // },
+        // {
+        //     x: 400 / 2,
+        //     y: 400 / 2,
+        //     radius: 40 / 2
+        // },
+        // {
+        //     x: 200 / 2,
+        //     y: 400 / 2,
+        //     radius: 50 / 2
+        // },
+
+
+        //具有内角的五边形
+
+
+        {
+            x:60,
+            y:80,
+            radius: 10
+        },
+        {
+            x:10,
+            y:80,
+            radius: 10
+        },
+        {
+            x:10,
+            y:10,
+            radius: 10
+        },
+        {
+            x:60,
+            y:5,
+            radius: 10
+        },
+        {
+            x:30,
+            y:50,
+            radius: 10
+        },
+
+
+
+    ];
+
+    drawShape(json2HandlePoint(json));
+
+
+    /**
+     * 将json点集转化为可操作点handlePoints
+     */
+    function json2HandlePoint(json) {
+
+        let copyJson = JSON.parse(JSON.stringify(json));
+        console.log("用户输入的值", copyJson);
+
+        //矫正radius
+        fixRadius(json);
+
+        console.log("画板渲染的值", json);
+
+
+        //将所有可操作点保存handlePoint变量中
+        let handlePoints = [];
+
+        //第一个点
+        handlePoints.push({
+            start: {x: json[json.length - 1].x, y: json[json.length - 1].y},
+            middle: {x: json[0].x, y: json[0].y},
+            end: {x: json[1].x, y: json[1].y},
+            radius: json[0].radius
+        });
+
+        //中间所有点
+        for (let i = 1; i < json.length - 1; i++) {
+            handlePoints.push({
+                start: {x: json[i - 1].x, y: json[i - 1].y},
+                middle: {x: json[i].x, y: json[i].y},
+                end: {x: json[i + 1].x, y: json[i + 1].y},
+                radius: json[i].radius
+            });
+        }
+
+        //最后一个点
+        handlePoints.push({
+            start: {x: json[json.length - 2].x, y: json[json.length - 2].y},
+            middle: {x: json[json.length - 1].x, y: json[json.length - 1].y},
+            end: {x: json[0].x, y: json[0].y},
+            radius: json[json.length - 1].radius
+        });
+
+
+        return handlePoints;
+    }
+
+    /**
+     * 将异常json的radius按照Sketch模式矫正
+     * sketch圆角异常数据处理方法：
+
+     用户可设定radius值，当出现不合法值的时候，原值不变，图像自行优化
+
+     说明：如100*50的矩形，可以在50像素的边对应的角，各设置成radius=25，也可以其中一个设为0，另一个设为50，总之就是radius1+radius2=50。当radius1+radius2>50的时候，在绘制里，radius_min不变，radius_max = 50/2,而在json数据中不改变这些数据，已保存用户的数据记录
+     */
+    function fixRadius(json) {
+        //第一个点
+        _fixRadius(json[json.length - 1], json[0], json[1]);
+
+        for (let i = 1; i < json.length - 1; i++) {
+            _fixRadius(json[i - 1], json[i], json[i + 1]);
+        }
+
+        //最后一个点
+        _fixRadius(json[json.length - 2], json[json.length - 1], json[0]);
+    }
+
+    function _fixRadius(left, curr, right) {
+        let {pow, acos, tan} = Math;
+
+        const leftLine = pow(pow(left.x - curr.x, 2) + pow(left.y - curr.y, 2), 0.5);
+        const rightLine = pow(pow(right.x - curr.x, 2) + pow(right.y - curr.y, 2), 0.5);
+
+        //两边最短边
+        const minLine = leftLine < rightLine ? leftLine : rightLine;
+        //中间角度
+        const angleCurr = acos(((left.x - curr.x) * (right.x - curr.x) + (left.y - curr.y) * (right.y - curr.y)) / (leftLine * rightLine));
+        //理论上能实现的最大弧度半径
+        let maxRadius = minLine * tan(angleCurr / 2);
+
+
+
+        /*
+            当左右都为0且，当前radius超过理论最大弧度半径时
+            将radius缩减到最大弧度半径
+         */
+        if (left.radius === 0 && right.radius === 0) {
+            if (curr.radius > maxRadius) {
+                curr.radius = maxRadius;
+            }
+        }
+
+        /*
+            当左右任意一边有值，且radius超过理论最大弧度半径的一半时
+            将radius缩减到最大弧度半径的一半
+         */
+
+        if (left.radius > 0 || right.radius > 0) {
+            if (curr.radius > maxRadius / 2) {
+                curr.radius = maxRadius / 2;
+            }
+        }
+
+    }
+
+    function drawShape(handlePoints) {
+        //重置路径
+        context.beginPath();
+
+
+        let currPoint = undefined;
+
+        const origin = _toOrigin(handlePoints[0].start, handlePoints[0].middle, handlePoints[0].end, handlePoints[0].radius);
+
+        context.moveTo(origin.x, origin.y);
+
+        // 测试：添加数字标记
+        // context.fillText('0', origin.x, origin.y);
+
+
+        for (let i = 1; i < handlePoints.length; i++) {
+            currPoint = handlePoints[i];
+
+            //绘制圆弧
+            context.arcTo(currPoint.middle.x, currPoint.middle.y, currPoint.end.x, currPoint.end.y, currPoint.radius);
+
+
+            // 测试：添加数字标记
+            // context.fillText(i, currPoint.middle.x, currPoint.middle.y);
+        }
+
+        currPoint = handlePoints[0];
+        context.arcTo(currPoint.middle.x, currPoint.middle.y, currPoint.end.x, currPoint.end.y, currPoint.radius);
+
+        context.stroke();
+        context.closePath();
+    }
+
+    /**
+     * 已知A、B、C三点坐标，求半径为r的内切圆与AC的切点坐标
+     * @param A
+     * @param B
+     * @param C
+     * @param r
+     * @returns {{x: *, y: *}}
+     */
+    function _toOrigin(A, B, C, r) {
+        let {pow, acos, tan} = Math;
+
+        //ab的长度
+        const ab = pow(pow(A.x - B.x, 2) + pow(A.y - B.y, 2), 0.5);
+        //bc的长度
+        const bc = pow(pow(C.x - B.x, 2) + pow(C.y - B.y, 2), 0.5);
+
+        //B的角度
+        const angleB = acos(((A.x - B.x) * (C.x - B.x) + (A.y - B.y) * (C.y - B.y)) / (ab * bc));
+
+        //BM的长度,即B到切线的长度
+        const M = r / tan(angleB / 2);
+
+
+        const k = (C.y - B.y) / (C.x - B.x);
+
+
+        if (k == '-Infinity') {
+            return {
+                x: B.x,
+                y: B.y - M
+            };
+        } else if (k == 'Infinity') {
+            return {
+                x: B.x,
+                y: B.y + M
+            };
+        } else {
+            let i = 1;
+
+            if (1 / k == '-Infinity') {
+                i = -1;
+            }
+
+            if (k < 0) {
+                if ((C.y - B.y) < 0) {
+                    i = 1;
+                } else {
+                    i = -1;
+                }
+            }
+
+            if (k > 0) {
+                if (C.y - B.y < 0) {
+                    i = -1;
+                }
+            }
+
+
+            return {
+                x: B.x + (1 / pow(1 + k * k, 0.5)) * M * i,
+                y: B.y + (k / pow(1 + k * k, 0.5)) * M * i
+            };
+        }
+
+
+    }
+
+
+</script>
+</html>
